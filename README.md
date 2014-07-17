@@ -15,8 +15,13 @@ Typical workflow scenario:
 
     $> rebar compile
     $> relx release
-    $> pkgx
+    $> pkgx deb
 
 Now, you have a `*.deb` file in your directory which holds the Erlang
 release and can be easily installed on a target system.
+
+The service will automatically start (using an ``init.d`` script), and
+runs under a new user account. Log files are found in
+/var/log/<package>. A default, empty, config file is created in
+/etc/<package>/<package>.config.
 
