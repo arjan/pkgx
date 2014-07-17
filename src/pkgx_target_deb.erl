@@ -7,6 +7,7 @@
 -export([run/3]).
 
 run(AppName, Vsn, PkgVars) ->
+    PkgName = proplists:get_value(package_name, PkgVars),
     FileMap =
         [
          {"debian/changelog", deb_debian_changelog_dtl},
@@ -16,9 +17,9 @@ run(AppName, Vsn, PkgVars) ->
          {"debian/postinst", deb_debian_postinst_dtl},
          {"debian/postrm", deb_debian_postrm_dtl},
          {"debian/rules", deb_debian_rules_dtl},
-         {"debian/" ++ AppName ++ ".init", deb_debian_init_dtl},
-         {"debian/" ++ AppName ++ ".install", deb_debian_install_dtl},
-         {AppName ++ ".config", package_config_dtl}
+         {"debian/" ++ PkgName ++ ".init", deb_debian_init_dtl},
+         {"debian/" ++ PkgName ++ ".install", deb_debian_install_dtl},
+         {PkgName ++ ".config", package_config_dtl}
         ],
     Basedir = proplists:get_value(basedir, PkgVars),
     lists:map(fun ({F, V}) ->
@@ -32,9 +33,11 @@ run(AppName, Vsn, PkgVars) ->
 
 process_file_entry(File, Module, Vars) when is_atom(Module) ->
     {ok, Output} = Module:render(Vars),
+    io:format(user, "~s~n", [File]),
     ok = file:write_file(File, Output);
     
 process_file_entry(File, Output, _Vars) when is_binary(Output) ->
+    io:format(user, "~s~n", [File]),
     ok = file:write_file(File, Output).
     
 
