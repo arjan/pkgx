@@ -12,7 +12,9 @@ do_setup()
     chown {{ package_install_user }}:{{ package_install_user }} -R /var/lib/{{ package_name }}
     mkdir -p /var/log/{{ package_name }}
     chown {{ package_install_user }}:{{ package_install_user }} /var/log/{{ package_name }}
-    ln -s /var/log/{{ package_name }}/ /usr/lib/{{ package_name }}/log
+    if [ ! -L "/usr/lib/{{ package_name }}/log" ]; then
+        ln -s /var/log/{{ package_name }} /usr/lib/{{ package_name }}/log
+    fi
 }
 
 case "$1" in

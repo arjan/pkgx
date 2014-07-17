@@ -33,11 +33,10 @@ run(AppName, Vsn, PkgVars) ->
 
 process_file_entry(File, Module, Vars) when is_atom(Module) ->
     {ok, Output} = Module:render(Vars),
-    io:format(user, "~s~n", [File]),
-    ok = file:write_file(File, Output);
+    process_file_entry(File, iolist_to_binary(Output), Vars);
     
 process_file_entry(File, Output, _Vars) when is_binary(Output) ->
-    io:format(user, "~s~n", [File]),
+    io:format(user, "Created ~s~n", [File]),
     ok = file:write_file(File, Output).
     
 
