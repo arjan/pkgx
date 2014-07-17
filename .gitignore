@@ -1,0 +1,6 @@
+rebar
+ebin/*.beam
+ebin/*.app
+pkgx
+/.rebar/erlcinfo
+deps

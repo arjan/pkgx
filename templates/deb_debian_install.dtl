@@ -1,0 +1,5 @@
+bin/ /usr/lib/{{ package_name }}
+erts-{{ erts_version }} /usr/lib/{{ package_name }}
+lib/ /usr/lib/{{ package_name }}
+releases/ /usr/lib/{{ package_name }}
+{{ package_name }}.config /etc/{{ package_name }}

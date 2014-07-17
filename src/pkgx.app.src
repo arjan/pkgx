@@ -1,0 +1,13 @@
+{application, pkgx,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib,
+                  erlydtl
+                 ]},
+  {mod, { pkgx_app, []}},
+  {env, []}
+ ]}.

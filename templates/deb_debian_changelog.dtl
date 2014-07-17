@@ -1,0 +1,5 @@
+{{ package_name }} ({{ version }}-1) unstable; urgency=low
+
+  * Create release {{ version }}
+
+ -- {{ package_author_name }} <{{ package_author_email }}>  Wed, 23 Apr 2014 21:33:15 +0200

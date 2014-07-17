@@ -1,0 +1,18 @@
+%% The name of the package
+{package_name, "nmm"}.
+
+%% The details of the package author
+{package_author_name, "Arjan Scherpenisse"}.
+{package_author_email, "arjan@scherpenisse.net"}.
+
+%% The user under which the service is going to run
+{package_install_user, "nmm"}.
+{package_install_user_desc, "NMM user"}.
+
+%% Package description
+{package_shortdesc, "NMM backend"}.
+{package_desc, "Twitter scraping backend"}.
+
+%% License and copyright info for the package metadata
+{license_type, "MIT"}.
+{copyright, "2014 MiracleThings"}.
