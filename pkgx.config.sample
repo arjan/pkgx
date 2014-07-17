@@ -1,17 +1,17 @@
 %% The name of the package
-{package_name, "nmm"}.
+{package_name, "example"}.
 
 %% The details of the package author
 {package_author_name, "Arjan Scherpenisse"}.
 {package_author_email, "arjan@scherpenisse.net"}.
 
 %% The user under which the service is going to run
-{package_install_user, "nmm"}.
-{package_install_user_desc, "NMM user"}.
+{package_install_user, "example"}.
+{package_install_user_desc, "Example user"}.
 
 %% Package description
-{package_shortdesc, "NMM backend"}.
-{package_desc, "Twitter scraping backend"}.
+{package_shortdesc, "Example erlang app"}.
+{package_desc, "This is an example Erlang application, packaged using pkgx."}.
 
 %% License and copyright info for the package metadata
 {license_type, "MIT"}.
