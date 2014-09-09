@@ -13,7 +13,7 @@ do_setup()
     mkdir -p /var/log/{{ package_name }}
     chown {{ package_install_user }}:{{ package_install_user }} /var/log/{{ package_name }}
     if [ ! -L "/usr/lib/{{ package_name }}/log" ]; then
-        ln -s /var/log/{{ package_name }} /usr/lib/{{ package_name }}/log
+        cd /usr/lib/{{ package_name }} && ln -s /var/log/{{ package_name }} ./log
     fi
 }
 

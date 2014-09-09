@@ -23,5 +23,6 @@ release and can be easily installed on a target system.
 The service will automatically start (using an ``init.d`` script), and
 runs under a new user account. Log files are found in
 `/var/log/(package)`. A default, empty, config file is created in
-`/etc/(package)/(package).config`.
+`/etc/(package)/(package).config`, from which application environment
+variables are read from.
 
