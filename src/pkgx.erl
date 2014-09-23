@@ -25,10 +25,20 @@ main(Targets) ->
                     [Release|_] = lists:sort(ReleasesList0),
                     {release, AppName, Vsn, ErtsVsn, _Deps, _Permanent} = Release,
                     io:format(user, "Using release: ~s ~s~n", [AppName, Vsn]),
-                    Vars = [{app, AppName}, {version, Vsn}, {erts_version, ErtsVsn}, {basedir, "_rel"} | PkgVars],
+                    Vars = [{app, AppName}, {version, Vsn}, {erts_version, ErtsVsn}, {basedir, "_rel"}, {relx, relx_vars()} | PkgVars],
                     [ok = run_target(AppName, Vsn, Vars, T) || T <- Targets],
                     ok
             end
+    end.
+
+relx_vars() ->
+    File = "relx.config",
+    case filelib:is_regular(File) of
+        true ->
+            {ok, Cfg} = file:consult(File),
+            Cfg;
+        false ->
+            []
     end.
 
 run_target(AppName, Vsn, PkgVars, T) ->
@@ -41,8 +51,6 @@ run_target(AppName, Vsn, PkgVars, T) ->
             ok
     end.
             
-
-
 usage() ->
     io:format(user, "usage: pkgx <package-x.y.tar.gz> <deb|rpm>~n", []),
     ok.
