@@ -6,7 +6,7 @@
 
 -export([run/3]).
 
-run(AppName, Vsn, PkgVars) ->
+run(_AppName, _Vsn, PkgVars) ->
     PkgName = proplists:get_value(package_name, PkgVars),
     FileMap =
         [
@@ -28,7 +28,7 @@ run(AppName, Vsn, PkgVars) ->
                       process_file_entry(TargetFile, V, PkgVars)
               end, FileMap),
     Output = os:cmd("cd \"" ++ Basedir ++ "\" && debuild --no-tgz-check -i -us -uc -b"),
-    io:format(user, "~s~n", [Output]),
+    io:format(user, "~s~n", [unicode:characters_to_binary(Output)]),
     ok.
 
 process_file_entry(File, Module, Vars) when is_atom(Module) ->
