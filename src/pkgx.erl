@@ -42,14 +42,13 @@ relx_vars() ->
     end.
 
 run_target(AppName, Vsn, PkgVars, T) ->
-    try
-        Target = list_to_existing_atom("pkgx_target_" ++ T),
-        ok = Target:run(AppName, Vsn, PkgVars)
-    catch
-        _:badarg ->
-            io:format(user, "Unknown target: ~s~n", [T]),
-            ok
-    end.
+    Target = try
+                 list_to_existing_atom("pkgx_target_" ++ T)
+             catch
+                 _:badarg ->
+                     throw({error, {unknown_target, T}})
+             end,
+    ok = Target:run(AppName, Vsn, PkgVars).
             
 usage() ->
     io:format(user, "usage: pkgx <package-x.y.tar.gz> <deb|rpm>~n", []),
