@@ -15,17 +15,21 @@ main(Targets) ->
             cli_error("File not found: " ++ VarsFile);
         true ->
             {ok, PkgVars} = file:consult(VarsFile),
+            RelxVars = relx_vars(),
             {package_name, PkgName} = proplists:lookup(package_name, PkgVars),
-            ReleasesFile = "_rel/releases/RELEASES",
+            {release, {RelName, RelVer}, _RelDeps} = lists:keyfind(release, 1, RelxVars),
+            BaseDir = lists:flatten(io_lib:format("_build/prod/rel/~s", [RelName])),
+            io:format("Release name: '~s', version: '~s'\n", [RelName, RelVer]),
+            ReleasesFile = BaseDir ++ "/releases/RELEASES",
             case filelib:is_regular(ReleasesFile) of
                 false ->
-                    cli_error("No RELEASE file found for " ++ PkgName ++ ". Run './relx release' first.");
+                    cli_error("No RELEASE file found for " ++ PkgName ++ ". Run 'rebar3 release' first. " ++ ReleasesFile);
                 true ->
                     {ok, [ReleasesList0]} = file:consult(ReleasesFile),
                     [Release|_] = lists:sort(ReleasesList0),
                     {release, AppName, Vsn, ErtsVsn, _Deps, _Permanent} = Release,
                     io:format(user, "Using release: ~s ~s~n", [AppName, Vsn]),
-                    Vars = [{app, AppName}, {version, Vsn}, {erts_version, ErtsVsn}, {basedir, "_rel"}, {relx, relx_vars()} | PkgVars],
+                    Vars = [{app, AppName}, {version, Vsn}, {erts_version, ErtsVsn}, {basedir, BaseDir}, {relx, RelxVars} | PkgVars],
                     [ok = run_target(AppName, Vsn, Vars, T) || T <- Targets],
                     ok
             end
@@ -38,7 +42,13 @@ relx_vars() ->
             {ok, Cfg} = file:consult(File),
             Cfg;
         false ->
-            []
+            case filelib:is_regular("rebar.config") of
+                true ->
+                    {ok, RebarCfg} = file:consult("rebar.config"),
+                    proplists:get_value(relx, RebarCfg, []);
+                false ->
+                    []
+            end
     end.
 
 run_target(AppName, Vsn, PkgVars, T) ->

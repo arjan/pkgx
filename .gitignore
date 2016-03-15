@@ -4,3 +4,5 @@ ebin/*.app
 pkgx
 /.rebar/erlcinfo
 deps
+_build
+/rebar3

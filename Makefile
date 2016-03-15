@@ -1,5 +1,5 @@
-REBAR := ./rebar
-REBAR_URL := https://github.com/rebar/rebar/wiki/rebar
+REBAR := ./rebar3
+REBAR_URL := https://s3.amazonaws.com/rebar3/rebar3
 ERL       ?= erl
 
 .PHONY: compile test
@@ -8,16 +8,17 @@ all: script
 
 script: compile
 	$(REBAR) escriptize
+	cp _build/default/bin/pkgx .
 
 compile: $(REBAR)
-	$(REBAR) get-deps compile
+	$(REBAR) compile
 
 clean: $(REBAR)
 	$(REBAR) clean
 	rm -f pkgx
 
-./rebar:
+$(REBAR):
 	$(ERL) -noshell -s inets -s ssl \
-	  -eval '{ok, saved_to_file} = httpc:request(get, {"$(REBAR_URL)", []}, [], [{stream, "./rebar"}])' \
+	  -eval '{ok, saved_to_file} = httpc:request(get, {"$(REBAR_URL)", []}, [], [{stream, "$(REBAR)"}])' \
 	  -s init stop
-	chmod +x ./rebar
+	chmod +x $(REBAR)

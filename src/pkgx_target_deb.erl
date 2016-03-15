@@ -27,7 +27,7 @@ run(_AppName, _Vsn, PkgVars) ->
                       filelib:ensure_dir(TargetFile),
                       process_file_entry(TargetFile, V, PkgVars)
               end, FileMap),
-    Output = os:cmd("cd \"" ++ Basedir ++ "\" && debuild --no-tgz-check -i -us -uc -b"),
+    Output = os:cmd("cd \"" ++ Basedir ++ "\" && debuild --no-tgz-check --no-lintian -i -us -uc -b"),
     io:format(user, "~s~n", [unicode:characters_to_binary(Output)]),
     ok.
 
