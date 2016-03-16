@@ -1,4 +1,4 @@
 [{<<"erlydtl">>,
   {git,"https://github.com/erlydtl/erlydtl.git",
-       {ref,"8c876fde4c2b383c241d4d6cbba39d979548cd94"}},
+       {ref,"0b1cbebc68c86f02608c3c041a2361adf9acbc17"}},
   0}].
