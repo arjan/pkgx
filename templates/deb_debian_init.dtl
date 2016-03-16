@@ -11,4 +11,4 @@
 # Short-Description:    {{ package_shortdesc }}
 ### END INIT INFO
 
-/usr/bin/sudo -u {{ package_install_user }} CONFIG_PATH=/etc/{{ package_name }}/{{ package_name }}.config -i /usr/lib/{{ package_name }}/bin/{{ app }} $@
+/usr/bin/sudo -u {{ package_install_user }} RELX_CONFIG_PATH=/etc/{{ package_name }}/{{ package_name }}.config -i /usr/lib/{{ package_name }}/bin/{{ app }} $@
