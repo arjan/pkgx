@@ -1,5 +1,5 @@
 bin/ /usr/lib/{{ package_name }}
-{% if relx.include_erts|default:true %}
+{% if with_erts %}
 erts-{{ erts_version }} /usr/lib/{{ package_name }}
 {% endif %}
 lib/ /usr/lib/{{ package_name }}

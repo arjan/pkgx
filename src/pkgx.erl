@@ -28,8 +28,9 @@ main(Targets) ->
                     {ok, [ReleasesList0]} = file:consult(ReleasesFile),
                     [Release|_] = lists:sort(ReleasesList0),
                     {release, AppName, Vsn, ErtsVsn, _Deps, _Permanent} = Release,
-                    io:format(user, "Using release: ~s ~s~n", [AppName, Vsn]),
-                    Vars = [{app, AppName}, {version, Vsn}, {erts_version, ErtsVsn}, {basedir, BaseDir}, {relx, RelxVars} | PkgVars],
+                    io:format(user, "Using release: ~s ~s, ERTS ~s~n", [AppName, Vsn, ErtsVsn]),
+                    WithErts = filelib:is_dir(BaseDir ++ "/erts-" ++ ErtsVsn),
+                    Vars = [{app, AppName}, {version, Vsn}, {erts_version, ErtsVsn}, {basedir, BaseDir}, {relx, RelxVars}, {with_erts, WithErts} | PkgVars],
                     [ok = run_target(AppName, Vsn, Vars, T) || T <- Targets],
                     ok
             end
