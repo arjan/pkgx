@@ -18,12 +18,12 @@ main(Targets) ->
             RelxVars = relx_vars(),
             {package_name, PkgName} = proplists:lookup(package_name, PkgVars),
             {release, {RelName, RelVer}, _RelDeps} = lists:keyfind(release, 1, RelxVars),
-            BaseDir = lists:flatten(io_lib:format("_build/prod/rel/~s", [RelName])),
+            BaseDir = lists:flatten(io_lib:format("_rel/~s", [RelName])),
             io:format("Release name: '~s', version: '~s'\n", [RelName, RelVer]),
             ReleasesFile = BaseDir ++ "/releases/RELEASES",
             case filelib:is_regular(ReleasesFile) of
                 false ->
-                    cli_error("No RELEASE file found for " ++ PkgName ++ ". Run 'rebar3 release' first. " ++ ReleasesFile);
+                    cli_error("No RELEASES file found for " ++ PkgName ++ ". Run 'rebar3 release' first. " ++ ReleasesFile);
                 true ->
                     {ok, [ReleasesList0]} = file:consult(ReleasesFile),
                     [Release|_] = lists:sort(ReleasesList0),
