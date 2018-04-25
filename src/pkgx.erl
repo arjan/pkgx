@@ -23,7 +23,7 @@ main(Targets) ->
             ReleasesFile = BaseDir ++ "/releases/RELEASES",
             case filelib:is_regular(ReleasesFile) of
                 false ->
-                    cli_error("No RELEASE file found for " ++ PkgName ++ ". Run 'rebar3 release' first. " ++ ReleasesFile);
+                    cli_error("No RELEASES file found for " ++ PkgName ++ ". Run 'rebar3 release' first. " ++ ReleasesFile);
                 true ->
                     {ok, [ReleasesList0]} = file:consult(ReleasesFile),
                     [Release|_] = lists:sort(ReleasesList0),
